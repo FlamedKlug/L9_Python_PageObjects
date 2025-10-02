@@ -1,37 +1,29 @@
-import os
-
-from selene import browser, have
+from pages.registration_page import RegistrationPage
 
 
 def test_filling_form():
     # открытие браузера со страницей формы
-    browser.config.window_height = 1080
-    browser.config.window_width = 1920
-    browser.open('https://demoqa.com/automation-practice-form')
+    registration_page = RegistrationPage()
+    registration_page.open()
 
     # заполнение формы
-    browser.element('#firstName').type('Ivan')
-    browser.element('#lastName').type('Ivanov')
-    browser.element('#userEmail').type('Ivan.Ivanov@fakemail.org')
-    browser.element('[for=gender-radio-1]').click()
-    browser.element('#userNumber').type('1234567890')
-    browser.element('#dateOfBirthInput').click()
-    browser.element('.react-datepicker__year-select').type('1901')
-    browser.element('.react-datepicker__month-select').type('July')
-    browser.element('.react-datepicker__day--013').click()
-    browser.element('#subjectsInput').type('Computer Science').press_enter()
-    browser.element('[for="hobbies-checkbox-1"]').click()
-    browser.element('[for="hobbies-checkbox-3"]').click()
-    browser.element('#uploadPicture').send_keys(os.path.abspath('test_jpg.jpg'))
-    browser.element('#currentAddress').type('На деревню дедушке')
-    browser.element('#react-select-3-input').type('NCR').press_enter()
-    browser.element('#react-select-4-input').type('Delhi').press_enter()
+    registration_page.fill_first_name('Ivan')
+    registration_page.fill_last_name('Ivanov')
+    registration_page.fill_email('Ivan.Ivanov@fakemail.org')
+    registration_page.fill_gender()
+    registration_page.fill_mobile('1234567890')
+    registration_page.fill_date_of_birth('1901', 'July', '13')
+    registration_page.fill_subjects('Computer Science')
+    registration_page.fill_hobbies()
+    registration_page.fill_picture('test_jpg.jpg')
+    registration_page.fill_current_address('На деревню дедушке')
+    registration_page.fill_state_and_city('NCR', 'Delhi')
 
     # отправка формы
-    browser.element('#submit').click()
+    registration_page.submit_fill_form()
 
     # проверка результатов
-    browser.element('tbody').all('td').even.should(have.texts(
+    registration_page.expect_data(
         'Ivan Ivanov',
         'Ivan.Ivanov@fakemail.org',
         'Male',
@@ -41,6 +33,4 @@ def test_filling_form():
         'Sports, Music',
         'test_jpg.jpg',
         'На деревню дедушке',
-        'NCR Delhi'
-    ))
-
+        'NCR Delhi')

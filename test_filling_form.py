@@ -3,7 +3,7 @@ from Users.User import User, Gender, Hobbies
 from pages.registration_page import RegistrationPage
 
 
-def test_filling_form():
+def test_filling_form(browser_setup):
     test_user = User(first_name='Ivan',
                      second_name='Ivanov',
                      email='Ivan.Ivanov@fakemail.org',

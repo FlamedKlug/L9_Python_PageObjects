@@ -1,4 +1,3 @@
-import inspect
 import os
 from datetime import date
 
@@ -9,9 +8,7 @@ from Users.User import Gender, Hobbies, User
 class RegistrationPage:
     @staticmethod
     def open():
-        browser.config.window_height = 2080
-        browser.config.window_width = 1920
-        browser.open('https://demoqa.com/automation-practice-form')
+        browser.open('/automation-practice-form')
 
     @staticmethod
     def _fill_first_name(value):

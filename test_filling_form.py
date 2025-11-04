@@ -1,4 +1,7 @@
 from datetime import date
+
+import allure
+
 from Users.User import User, Gender, Hobbies
 from pages.registration_page import RegistrationPage
 
@@ -20,6 +23,11 @@ def test_filling_form(browser_setup):
 
     registration_page = RegistrationPage()
 
-    registration_page.open()
-    registration_page.registration(test_user)
-    registration_page.should_have_registered(test_user)
+    with allure.step("Open registration form"):
+        registration_page.open()
+
+    with allure.step("Fill form and submit"):
+        registration_page.registration(test_user)
+
+    with allure.step("Check form result"):
+        registration_page.should_have_registered(test_user)
